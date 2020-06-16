@@ -159,18 +159,30 @@ app.put('/update', (req, res) => {
                     let oldId = mongodb.ObjectID(data[0].mentor[0]["_id"]);
                     db.collection("mentor").update({ _id: oldId }, { $pull: { students: sid } }, (err, data) => {
                         if (err) throw err;
-                    })
-                }
-                db.collection("mentor").update({ _id: mid }, { $push: { students: sid } }, (err, data) => {
-                    if (err) throw err;
-                    db.collection("student").update({ _id: sid }, { $set: { mentor: mid } }, (err, data) => {
-                        if (err) throw err;
-                        client.close();
-                        res.status(200).json({
-                            msg: 'Updated the mentor'
+                        db.collection("mentor").update({ _id: mid }, { $push: { students: sid } }, (err, data) => {
+                            if (err) throw err;
+                            db.collection("student").update({ _id: sid }, { $set: { mentor: mid } }, (err, data) => {
+                                if (err) throw err;
+                                client.close();
+                                res.status(200).json({
+                                    msg: 'Updated the mentor'
+                                })
+                            })
                         })
                     })
-                })
+                } else {
+                    db.collection("mentor").update({ _id: mid }, { $push: { students: sid } }, (err, data) => {
+                        if (err) throw err;
+                        db.collection("student").update({ _id: sid }, { $set: { mentor: mid } }, (err, data) => {
+                            if (err) throw err;
+                            client.close();
+                            res.status(200).json({
+                                msg: 'Updated the mentor'
+                            })
+                        })
+                    })
+                }
+
             })
         })
     }
