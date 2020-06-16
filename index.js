@@ -7,7 +7,15 @@ const cors = require('cors')
 const mongodb = require('mongodb');
 const mongoClient = mongodb.MongoClient;
 const dbURL = `mongodb+srv://vjakash:mongodb@123@cluster0-hou2b.mongodb.net/mentorAssign?retryWrites=true&w=majority`;
-
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    if (req.method == 'OPTIONS') {
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,PATCH");
+        return res.status(200).json({});
+    }
+    next();
+})
 app.use(bodyParser.json());
 app.use(cors({
     origin: '*'
