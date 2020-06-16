@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongodb = require('mongodb');
 const mongoClient = mongodb.MongoClient;
-const dbURL = `mongodb://localhost:27017`;
+const dbURL = `mongodb+srv://vjakash:mongodb@123@cluster0-hou2b.mongodb.net/mentorAssign?retryWrites=true&w=majority`;
 
 app.use(bodyParser.json());
 app.use(cors({
